@@ -6,7 +6,7 @@
 
     <title>Markdown Slides</title>
     <link rel="stylesheet" href="./css/reveal.css" />
-    <link rel="stylesheet" href="./css/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/theme/serif.css" id="theme" />
     <link rel="stylesheet" href="./css/highlight/zenburn.css" />
     <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print" />
 
@@ -15,116 +15,92 @@
     <div class="reveal">
       <div class="slides"><section  data-markdown><script type="text/template">
 
-# A new beginning
+# Beginning rxjs
 
-The controls are easy!
+[`https://ryansheehan.github.io/rxjs-presentation`](https://ryansheehan.github.io/rxjs-presentation) <!-- .element: style="font-size:.75em" -->
 
-* Advance the deck with "SPACEBAR"
-* Navigate the deck with the arrow-keys <!-- .element: class="fragment" data-fragment-index="1" -->
-* Press "O" key to see the overview <!-- .element: class="fragment" -->
-</script></section><section  data-markdown><script type="text/template">
-## Presenter features
+![presentation link](_assets/qr-code.png) <!-- .element: height="240px" -->
 
-> Press `S` key to see speaker notes.
+**By Ryan Sheehan**
+</script></section><section ><section data-markdown><script type="text/template">
+## What is Rx
 
-<aside class="notes"><p>speaker notes FTW!</p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
-## Organization
-
-Subtopics can be organized vertically.
-
-Press "SPACEBAR" or "DOWN".
-
-Press "RIGHT" to skip
+>"A library for composing asynchronous and event-based programs by using
+observable sequences."
 </script></section><section data-markdown><script type="text/template">
-<!-- .slide: data-background-color="green" -->
+## Who is behind Rx
 
-## Let's go down
+[ReactiveX](http://reactivex.io/) is an open source project
 
-Set slide properties through html-comments!
-
-```markdown
-<!-- .slide: data-background-color="green" -->
-## Let's go down
-```
+* Microsoft
+* Netflix
+* Github
+* Google
+* ... many more
 </script></section><section data-markdown><script type="text/template">
-## Load assets
+## Where is Rx implemented
 
-```markdown
-![tyler logo](_assets/tyler-logo-lg.png)
-```
+* Javascript/Typescript
+* Java
+* C#
+* Python
+* ... it's everywhere
+</script></section></section><section  data-markdown><script type="text/template">
+## When might Rx be applied
 
-![tyler logo](_assets/tyler-logo-lg.png)
-</script></section><section data-markdown><script type="text/template">
-## Async load assets
+Managing asynchronous data flows
 
-To speed up initial load times, or big assets like videos use _`data-src`_
-
-```markdown
-![logo](_assets/tyler-logo-sm.png)
-<!-- .element height="64px" style="border-color: green" -->
-```
-
-or
-
-```markdown
-<img data-src="_assets/tyler-logo-sm.png"
-    height="64px" style="border-color: yellow">
-```
-
-![logo](_assets/tyler-logo-sm.png)
-<!-- .element height="64px" style="border-color: green" -->
-<img data-src="_assets/tyler-logo-sm.png"
-    height="64px" style="border-color: yellow">
-</script></section></section><section  data-markdown><script type="text/template"><!-- .slide: data-transition="zoom" -->
-
-## Change the slide transition
-
-Change an individual slide transition
-
-```markdown
-<!-- .slide: data-transition="zoom" -->
-```
-
-<aside class="notes"><p>There are a tone of meta tags</p>
-</aside></script></section><section  data-markdown><script type="text/template">
-## Fragments
-
-Setup slide fragments and their order with an `html-comment`
-
-```markdown
-<!-- .element: class="fragment" data-fragment-index="3" -->
-```
-
-* Fragment 1 <!-- .element: class="fragment" data-fragment-index="3" -->
-* Fragment 2 <!-- .element: class="fragment" data-fragment-index="1" -->
-* Fragment 3 <!-- .element: class="fragment" -->
+* UI
+* Web requests
+* Sockets
 </script></section><section  data-markdown><script type="text/template">
-## Complicated styling
+## Why should we use it
 
-In _package.json_, update the "reveal-md" commands
-
-```json
-scripts: {
-    "start": "reveal-md presentation.md --assets-dir assets",
-}
-```
-
-changes to
-
-```json
-scripts: {
-    "start":
-        "reveal-md presentation.md --css custom.css --assets-dir assets"
-}
-```
+* Composable transformations
+* Testable
+* Rich optimized api
 </script></section><section  data-markdown><script type="text/template">
-# Conclusion
+## What is rxjs
 
-Knock out your slide deck and fast!
+The implementation of Rx for javascript
 
-**powered by [reveal.js](https://github.com/hakimel/reveal.js)**
-</script></section></div>
+_(... and TypeScript)_ <!-- .element: class="fragment fade-up" -->
+</script></section><section  data-markdown><script type="text/template">
+## Observable vs Observer
+
+Observable ➡️ <span class="fragment" data-fragment-index="1">Publisher</span>
+
+Observer ➡️ <span class="fragment" data-fragment-index="1">Subscriber</span>
+</script></section><section  data-markdown><script type="text/template">
+## Visualize an observable
+
+The observable captures the
+event stream of button clicks
+
+![observable](_assets/observable.gif)
+</script></section><section  data-markdown><script type="text/template">
+## What can be captured
+
+* anything can be a stream of events
+* observables have 3 event hooks
+  * next
+  * complete
+  * error
+</script></section><section  data-markdown><script type="text/template"><!-- .slide: data-background="https://media.giphy.com/media/kaq6GnxDlJaBq/giphy.gif" data-background-size="contain" -->
+
+## Confused? <!-- .element: style="margin-bottom: 160px" -->
+</script></section><section  data-markdown><script type="text/template">
+## Let's look at code
+
+```javascript
+const { interval } = Rx;
+const { mapTo } = RxOperators;
+
+interval(1000).pipe(
+  mapTo(emoji('smile')),
+);
+```
+</script></section><section  data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" --></script></section></div>
     </div>
 
     <script src="./lib/js/head.min.js"></script>
@@ -144,7 +120,9 @@ Knock out your slide deck and fast!
         return target;
       }
 
-      const {dependencies: presentationDeps, ...revealOptionsJson} = {"controls":true,"progress":true,"slideNumber":false,"transition":"convex","multiplex":{"secret":null,"id":"20fdea2afcd83552","url":"https://reveal-js-multiplex-ccjbegmaii.now.sh"},"dependencies":[{"src":"//cdn.socket.io/socket.io-1.3.5.js","async":true},{"src":"plugin/multiplex/client.js","async":true}]};
+      // const {dependencies: presentationDeps=[], ...revealOptionsJson={}} = {"controls":true,"progress":true,"slideNumber":false,"transition":"convex","backgroundTransition":"convex","multiplex":{"secret":null,"id":"20fdea2afcd83552","url":"https://reveal-js-multiplex-ccjbegmaii.now.sh"},"dependencies":[{"src":"//cdn.socket.io/socket.io-1.3.5.js","async":false},{"src":"plugin/multiplex/client.js","async":false}]};
+      const userDefinedOptions = {"controls":true,"progress":true,"slideNumber":false,"transition":"convex","backgroundTransition":"convex","multiplex":{"secret":null,"id":"20fdea2afcd83552","url":"https://reveal-js-multiplex-ccjbegmaii.now.sh"},"dependencies":[{"src":"//cdn.socket.io/socket.io-1.3.5.js","async":false},{"src":"plugin/multiplex/client.js","async":false}]};
+      const {dependencies: userDeps=[], ...userOptions} = userDefinedOptions;
 
       // Optional libraries used to extend on reveal.js
       const deps = [
@@ -164,13 +142,13 @@ Knock out your slide deck and fast!
         history: true,
         center: true,
         transition: 'default', // none/fade/slide/convex/concave/zoom
-        dependencies: [...deps, ...presentationDeps]
+        dependencies: [...deps, ...userDeps]
       };
 
       // options from URL query string
       const queryOptions = Reveal.getQueryHash() || {};
 
-      const options = extend(defaultOptions, revealOptionsJson, queryOptions);
+      const options = extend(defaultOptions, userOptions, queryOptions);
     </script>
 
 
