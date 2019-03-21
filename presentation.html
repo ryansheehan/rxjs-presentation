@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Markdown Slides</title>
+    <title>intro to rxjs</title>
     <link rel="stylesheet" href="./css/reveal.css" />
-    <link rel="stylesheet" href="./css/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/theme/solarized.css" id="theme" />
     <link rel="stylesheet" href="./css/highlight/zenburn.css" />
     <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print" />
 
@@ -15,115 +15,328 @@
     <div class="reveal">
       <div class="slides"><section  data-markdown><script type="text/template">
 
-# A new beginning
+### Follow along
 
-The controls are easy!
+![presentation link](_assets/qr-code.png) <!-- .element: height="240px" -->
 
-* Advance the deck with "SPACEBAR"
-* Navigate the deck with the arrow-keys <!-- .element: class="fragment" data-fragment-index="1" -->
-* Press "O" key to see the overview <!-- .element: class="fragment" -->
+[`https://ryansheehan.github.io/rxjs-presentation`](https://ryansheehan.github.io/rxjs-presentation) <!-- .element: style="font-size:.75em" -->
 </script></section><section  data-markdown><script type="text/template">
-## Presenter features
+# Intro to rxjs
 
-> Press `S` key to see speaker notes.
+Presenter: _Ryan Sheehan_
+</script></section><section ><section data-markdown><script type="text/template">
+## What is Rx
 
-<aside class="notes"><p>speaker notes FTW!</p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
-## Organization
-
-Subtopics can be organized vertically.
-
-Press "SPACEBAR" or "DOWN".
-
-Press "RIGHT" to skip
+>"A library for composing asynchronous and event-based programs by using
+observable sequences."
 </script></section><section data-markdown><script type="text/template">
-<!-- .slide: data-background-color="green" -->
+## Who makes Rx
 
-## Let's go down
+[ReactiveX](http://reactivex.io/) is an open source project
 
-Set slide properties through html-comments!
+* Microsoft
+* Netflix
+* Github
+* Google
 
-```markdown
-<!-- .slide: data-background-color="green" -->
-## Let's go down
-```
+... many more
 </script></section><section data-markdown><script type="text/template">
-## Load assets
+## Where is Rx implemented
 
-```markdown
-![tyler logo](_assets/tyler-logo-lg.png)
-```
+* Javascript/Typescript
+* Java
+* C#
+* Python
+* ... it's everywhere
+</script></section></section><section  data-markdown><script type="text/template">
+## Applications
 
-![tyler logo](_assets/tyler-logo-lg.png)
-</script></section><section data-markdown><script type="text/template">
-## Async load assets
+Managing asynchronous data flows
 
-To speed up initial load times, or big assets like videos use _`data-src`_
-
-```markdown
-![logo](_assets/tyler-logo-sm.png)
-<!-- .element height="64px" style="border-color: green" -->
-```
-
-or
-
-```markdown
-<img data-src="_assets/tyler-logo-sm.png"
-    height="64px" style="border-color: yellow">
-```
-
-![logo](_assets/tyler-logo-sm.png)
-<!-- .element height="64px" style="border-color: green" -->
-<img data-src="_assets/tyler-logo-sm.png"
-    height="64px" style="border-color: yellow">
-</script></section></section><section  data-markdown><script type="text/template"><!-- .slide: data-transition="zoom" -->
-
-## Change the slide transition
-
-Change an individual slide transition
-
-```markdown
-<!-- .slide: data-transition="zoom" -->
-```
-
-<aside class="notes"><p>There are a tone of meta tags</p>
-</aside></script></section><section  data-markdown><script type="text/template">
-## Fragments
-
-Setup slide fragments and their order with an `html-comment`
-
-```markdown
-<!-- .element: class="fragment" data-fragment-index="3" -->
-```
-
-* Fragment 1 <!-- .element: class="fragment" data-fragment-index="3" -->
-* Fragment 2 <!-- .element: class="fragment" data-fragment-index="1" -->
-* Fragment 3 <!-- .element: class="fragment" -->
+* UI
+* Web requests
+* Sockets
 </script></section><section  data-markdown><script type="text/template">
-## Complicated styling
+## What is rxjs
 
-In _package.json_, update the "reveal-md" commands
+The implementation of Rx for javascript
 
-```json
-scripts: {
-    "start": "reveal-md presentation.md --assets-dir assets",
+_(... and TypeScript)_ <!-- .element: class="fragment fade-up" -->
+</script></section><section ><section data-markdown><script type="text/template">
+## Observables
+
+>Observables provide a common interface for observers to watch a stream of information
+
+![simple observable](_assets/simple-observable.gif)
+</script></section><section data-markdown><script type="text/template">
+## Javascript gap
+
+|   | Pull | Push |
+| ----- | ----- | ------ |
+| **One** | Function | Promise |
+| **Many** | Generator | Observable |
+</script></section><section data-markdown><script type="text/template">
+## Common Creators
+
+![simple observable](_assets/simple-observable.gif)
+
+* `interval(1000)`
+* `of(,)`
+* `from([])`
+* `fromEvent(target, eventName)`
+</script></section><section data-markdown><script type="text/template">
+## Exercise 1
+
+* Introducing the visualizer
+* Experiment with [creators](https://rxjs-dev.firebaseapp.com/api) <!-- .element: target="_blank" -->
+
+```javascript
+// Built into rxjs
+const {interval, of, from} = Rx;
+
+interval(500);
+// of('c',3,'p','o');
+// from(['r',2,'d',2]);
+
+// custom gui helpers creators
+// createInput();
+// createButton('hello');
+```
+</script></section><section data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Receiving data
+
+Create a subscription
+
+```javascript
+interval(1000).subscribe(
+  value => console.log(value) // print each value to console
+);
+```
+
+![simple observable](_assets/simple-observable.gif)
+
+Subscribers are also known as <!-- .element: class="fragment" --> _"observers"_.
+</script></section><section data-markdown><script type="text/template">
+## Observers
+
+Observers implement 3 hooks
+
+```typescript
+interface Observer<T> {
+  closed?: boolean
+  next: (value: T) => void
+  error: (err: any) => void
+  complete: () => void
 }
 ```
+</script></section><section data-markdown><script type="text/template">
+## Subscribe
 
-changes to
+`.subscribe()` _optionally_ takes any of the three observer hooks
 
-```json
-scripts: {
-    "start":
-        "reveal-md presentation.md --css custom.css --assets-dir assets"
+```javascript
+interval(1000).subscribe(
+  value => console.log(`next: ${value}`),
+  error => console.error(error),
+  () => console.log('complete')
+);
+```
+
+Or an <!-- .element: class="fragment" --> `IObserver<T>` object
+</script></section><section data-markdown><script type="text/template">
+## There is a catch
+
+>Observables will not run without an observer!
+
+#####  (mostly...) <!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Confused?
+
+![confused](_assets/confused.gif)
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Practical example
+
+Observable of click events
+
+![observable](_assets/observable.gif)
+
+Anything can be funneled into observables. <!-- .element: class="fragment"  -->
+</script></section><section data-markdown><script type="text/template">
+## Let's look at code
+
+```javascript
+const { interval } = Rx;
+const { mapTo } = RxOperators;
+
+interval(1000).pipe(
+  mapTo(emoji('smile')),
+).subscribe(
+  emoji => printOnTimeline(emoji)
+);
+```
+
+![interval-gif](_assets/observable-smile.gif)
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Operators
+
+>Operators apply a transformation to the observable stream
+
+```javascript
+// example of common operators; there are MANY more
+map(v => `${v}`)
+filter(v => v)
+take(1)
+skip(2)
+```
+</script></section><section data-markdown><script type="text/template">
+## Pipes
+
+`pipe()` is used to apply operators
+
+```javascript
+interval(1000);
+
+interval(1000).pipe(
+  mapTo(emoji('smile'))
+);
+```
+
+![interval-gif](_assets/observable-map.gif)
+</script></section><section data-markdown><script type="text/template">
+## Chaining
+
+```javascript
+interval(500).pipe(
+  map(x => x + 1),
+  filter(x => x % 2 === 0),
+  take(5)
+);
+```
+
+![even-observable](_assets/even-observable.gif)
+
+[Look at the built-in operators](https://rxjs-dev.firebaseapp.com/api)<!-- .element: target="_blank" -->
+</script></section><section data-markdown><script type="text/template">
+## Composable
+
+Create reusable operators, with arguments even!
+
+```javascript
+const myPipe = (offset, mod) => pipe(
+  map(x => x + offset),
+  filter(x => x % mod === 0),
+);
+
+interval(500).pipe(
+  myPipe(1, 2),
+  take(5)
+);
+```
+
+![even-observable](_assets/even-observable.gif)
+</script></section><section data-markdown><script type="text/template">
+### Think assembly lines
+
+![factory-gif](_assets/assembly-line.gif) <!-- .element: height="400px"  -->
+</script></section><section data-markdown><script type="text/template">
+![pipe all the things](_assets/pipe-things.jpg)
+</script></section><section data-markdown><script type="text/template">
+## Exercise 2
+
+An input box for an autocomplete
+
+* [debounceTime](https://rxjs-dev.firebaseapp.com/api/operators/debounceTime)
+* [distinctUntilChanged](https://rxjs-dev.firebaseapp.com/api/operators/distinctUntilChanged)
+
+```javascript
+const {debounceTime, distinctUntilChanged} = RxOperators;
+
+createInput();
+```
+</script></section><section data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Subscriptions
+
+Most observables do nothing until something is listening.
+
+```typescript
+interface IData {
+  value: string
+}
+
+// no request
+const request$ = http.get<IData>('my/endpoint');
+
+// request sent, value printed on response
+request$.subscribe(data => console.log(data.value));
+
+```
+</script></section><section data-markdown><script type="text/template">
+## Tracking subscriptions
+
+>closure + callbacks = potential leakage
+
+* know your object life cycles <!-- .element: class="fragment"  data-fragment-index="1" -->
+* observables that <!-- .element: class="fragment" data-fragment-index="2" -->
+ _complete_ or _error_ do not leak
+  * no need to track subscriptions <!-- .element: class="fragment" data-fragment-index="3" -->
+  * good practice to use operators that complete <!-- .element: class="fragment" data-fragment-index="3" -->
+* if unable to complete, track subscription objects <!-- .element: class="fragment" data-fragment-index="4" -->
+</script></section><section data-markdown><script type="text/template">
+### Completed observables?
+
+![confused](_assets/obama-what.gif)
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Observable events
+
+The observer interface gives a clue
+
+```typescript
+interface Observer<T> {
+  closed?: boolean
+  next: (value: T) => void
+  error: (err: any) => void
+  complete: () => void
 }
 ```
-</script></section><section  data-markdown><script type="text/template">
-# Conclusion
+</script></section><section data-markdown><script type="text/template">
+## Closed observables
 
-Knock out your slide deck and fast!
+>Observables are considered closed when they are finished
+producing values, or an error has occurred.
+</script></section><section data-markdown><script type="text/template">
+## Memory leaks
 
-**powered by [reveal.js](https://github.com/hakimel/reveal.js)**
+>Closed observables do not retain references to callback functions.
+</script></section></section><section  data-markdown><script type="text/template">
+## Let's practice
+
+I'll help you!
+
+![penguin-slap](_assets/penguin.gif) <!-- .element: height="200px"-->
+</script></section><section ><section data-markdown><script type="text/template">
+## Exercise 3
+
+Build an auto-saving form
+
+* multiple inputs
+* single object out
+* perform at least 1 mapping
+
+[Click here for api docs](https://rxjs-dev.firebaseapp.com/api)
+
+```javascript
+const {merge} = Rx;
+const {map} = RxOperators
+```
+</script></section><section data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
+</script></section></section><section  data-markdown><script type="text/template">
+## Helpful links
+
+* [rxjs Api](https://rxjs-dev.firebaseapp.com/api) <!-- .element: target="_blank" -->
+* [Original Playground](https://rxviz.com/) <!-- .element: target="_blank" -->
+* [Ryan's Customized Playground](https://rxviz.tylerdev.io) <!-- .element: target="_blank" -->
 </script></section></div>
     </div>
 
@@ -144,7 +357,9 @@ Knock out your slide deck and fast!
         return target;
       }
 
-      const {dependencies: presentationDeps, ...revealOptionsJson} = {"controls":true,"progress":true,"slideNumber":false,"transition":"convex","multiplex":{"secret":null,"id":"20fdea2afcd83552","url":"https://reveal-js-multiplex-ccjbegmaii.now.sh"},"dependencies":[{"src":"//cdn.socket.io/socket.io-1.3.5.js","async":true},{"src":"plugin/multiplex/client.js","async":true}]};
+      // const {dependencies: presentationDeps=[], ...revealOptionsJson={}} = {"controls":true,"progress":true,"slideNumber":false,"transition":"convex","backgroundTransition":"convex","multiplex":{"secret":null,"id":"d61536bee7cf099b","url":"https://reveal-js-multiplex-ccjbegmaii.now.sh"},"dependencies":[{"src":"//cdn.socket.io/socket.io-1.3.5.js","async":false},{"src":"plugin/multiplex/client.js","async":false}]};
+      const userDefinedOptions = {"controls":true,"progress":true,"slideNumber":false,"transition":"convex","backgroundTransition":"convex","multiplex":{"secret":null,"id":"d61536bee7cf099b","url":"https://reveal-js-multiplex-ccjbegmaii.now.sh"},"dependencies":[{"src":"//cdn.socket.io/socket.io-1.3.5.js","async":false},{"src":"plugin/multiplex/client.js","async":false}]};
+      const {dependencies: userDeps=[], ...userOptions} = userDefinedOptions;
 
       // Optional libraries used to extend on reveal.js
       const deps = [
@@ -164,13 +379,13 @@ Knock out your slide deck and fast!
         history: true,
         center: true,
         transition: 'default', // none/fade/slide/convex/concave/zoom
-        dependencies: [...deps, ...presentationDeps]
+        dependencies: [...deps, ...userDeps]
       };
 
       // options from URL query string
       const queryOptions = Reveal.getQueryHash() || {};
 
-      const options = extend(defaultOptions, revealOptionsJson, queryOptions);
+      const options = extend(defaultOptions, userOptions, queryOptions);
     </script>
 
 
