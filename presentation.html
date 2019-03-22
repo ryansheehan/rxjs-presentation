@@ -24,7 +24,9 @@
 # Intro to rxjs
 
 Presenter: _Ryan Sheehan_
-</script></section><section ><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>TEG Foundation Team</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
 ## What is Rx
 
 >"A library for composing asynchronous and event-based programs by using
@@ -59,9 +61,15 @@ Managing asynchronous data flows
 </script></section><section  data-markdown><script type="text/template">
 ## What is rxjs
 
-The implementation of Rx for javascript
+An implementation of Rx for javascript
 
 _(... and TypeScript)_ <!-- .element: class="fragment fade-up" -->
+
+<aside class="notes">
+rx/rxjs/observable used interchangeably
+<br/><br/>
+observables are now proposed built in features
+</aside>
 </script></section><section ><section data-markdown><script type="text/template">
 ## Observables
 
@@ -84,7 +92,9 @@ _(... and TypeScript)_ <!-- .element: class="fragment fade-up" -->
 * `of(,)`
 * `from([])`
 * `fromEvent(target, eventName)`
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>&quot;Creators&quot; is not a standard term, I made it up</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ## Exercise 1
 
 * Introducing the visualizer
@@ -103,7 +113,9 @@ interval(500);
 // createButton('hello');
 ```
 </script></section><section data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>discuss built in gui functions, how they use the fromEvent under the hood.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Receiving data
 
 Create a subscription
@@ -150,7 +162,9 @@ Or an <!-- .element: class="fragment" --> `IObserver<T>` object
 >Observables will not run without an observer!
 
 #####  (mostly...) <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>ConnectedObservable is an example of subscriberless execution</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Confused?
 
 ![confused](_assets/confused.gif)
@@ -162,6 +176,12 @@ Observable of click events
 ![observable](_assets/observable.gif)
 
 Anything can be funneled into observables. <!-- .element: class="fragment"  -->
+
+<aside class="notes">
+monitoring and updating UI state
+<br/><br/>
+making web-requests
+</aside>
 </script></section><section data-markdown><script type="text/template">
 ## Let's look at code
 
@@ -177,7 +197,10 @@ interval(1000).pipe(
 ```
 
 ![interval-gif](_assets/observable-smile.gif)
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>The exercise visualization does the subscription work
+for you</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Operators
 
 >Operators apply a transformation to the observable stream
@@ -189,6 +212,13 @@ filter(v => v)
 take(1)
 skip(2)
 ```
+
+<aside class="notes">
+Stress quantity and glancing at api docs
+<br/><br/>
+Other notable operators: debounceTime, distinctUntilChanged,
+tap, mergeMap
+</aside>
 </script></section><section data-markdown><script type="text/template">
 ## Pipes
 
@@ -203,7 +233,10 @@ interval(1000).pipe(
 ```
 
 ![interval-gif](_assets/observable-map.gif)
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>Older versions do not require using pipe, and used a fluent api system.
+fluent api is now deprecated</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ## Chaining
 
 ```javascript
@@ -235,11 +268,19 @@ interval(500).pipe(
 ```
 
 ![even-observable](_assets/even-observable.gif)
+
+<aside class="notes">
+pipe() not required.  Can wrap any operator on its own.
+<br/><br/>
+Especially useful when working with higher order observables
+</aside>
 </script></section><section data-markdown><script type="text/template">
 ### Think assembly lines
 
 ![factory-gif](_assets/assembly-line.gif) <!-- .element: height="400px"  -->
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>Long gif</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ![pipe all the things](_assets/pipe-things.jpg)
 </script></section><section data-markdown><script type="text/template">
 ## Exercise 2
@@ -255,7 +296,9 @@ const {debounceTime, distinctUntilChanged} = RxOperators;
 createInput();
 ```
 </script></section><section data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>createInput().pipe(debounceTime(1000), distinctUntilChanged())</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Subscriptions
 
 Most observables do nothing until something is listening.
@@ -283,7 +326,9 @@ request$.subscribe(data => console.log(data.value));
   * no need to track subscriptions <!-- .element: class="fragment" data-fragment-index="3" -->
   * good practice to use operators that complete <!-- .element: class="fragment" data-fragment-index="3" -->
 * if unable to complete, track subscription objects <!-- .element: class="fragment" data-fragment-index="4" -->
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>object life cycles with function pointers is a common way to leak in all languages</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Completed observables?
 
 ![confused](_assets/obama-what.gif)
@@ -300,16 +345,23 @@ interface Observer<T> {
   complete: () => void
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>Emphasis on error and complete</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ## Closed observables
 
 >Observables are considered closed when they are finished
 producing values, or an error has occurred.
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>Once completed, for ever completed</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ## Memory leaks
 
 >Closed observables do not retain references to callback functions.
-</script></section></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>Common misconception is that subscription objects need to be captured
+and manually unsubscribed.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
 ## Let's practice
 
 I'll help you!
@@ -330,8 +382,12 @@ Build an auto-saving form
 const {merge} = Rx;
 const {map} = RxOperators
 ```
-</script></section><section data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
-</script></section></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>1 text input, 1 toggle, map toggle to number, single object</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
+
+<aside class="notes"><p>map, skip, combineLatest, debounceTime, distinctUntilChanged, startWith, and maybe filter</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
 ## Helpful links
 
 * [rxjs Api](https://rxjs-dev.firebaseapp.com/api) <!-- .element: target="_blank" -->
